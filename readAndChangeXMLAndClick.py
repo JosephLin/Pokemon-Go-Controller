@@ -1,13 +1,22 @@
+#!/usr/bin/env python
+
 import xml.etree.cElementTree as ET
 import urllib2
 import json
+import os
+import time
 
 lastLat = ""
 lastLng = ""
 
+def clickAction():
+	os.system("./autoClicker -x 750 -y 400")
+	os.system("./autoClicker -x 750 -y 450")
+	print "clicking!!"
+
 def getPokemonLocation():
 	try:
-		response = urllib2.urlopen("http://172.16.255.195/", timeout = 1)
+		response = urllib2.urlopen("http://172.16.11.249/", timeout = 1)
 		return json.load(response)
 	except urllib2.URLError as e:
 		print e.reason
@@ -24,6 +33,13 @@ def generateXML():
 			ET.SubElement(wpt, "name").text = "PokemonLocation"
 			ET.ElementTree(gpx).write("pokemonLocation.gpx")
 			print "Location Updated!", "latitude:", geo["lat"], "longitude:" ,geo["lng"]
+			clickAction()
+		else:
+			print "Location not changed"
+	else:
+		print "Location is nil!"
+
+	time.sleep(1)
 
 def start():
 	while True:
