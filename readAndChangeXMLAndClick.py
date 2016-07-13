@@ -5,7 +5,9 @@ import urllib2
 import json
 import os
 import time
+import sys
 
+ip_addr = "http://" + sys.argv[1]
 lastLat = ""
 lastLng = ""
 
@@ -16,7 +18,7 @@ def clickAction():
 
 def getPokemonLocation():
 	try:
-		response = urllib2.urlopen("http://172.16.11.249/", timeout = 1)
+		response = urllib2.urlopen(ip_addr, timeout = 1)
 		return json.load(response)
 	except urllib2.URLError as e:
 		print e.reason
